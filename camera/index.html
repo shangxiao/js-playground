@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Camera</title>
+  </head>
+
+  <body>
+    <h1>Camera</h1>
+    <div>
+      <video id="preview"></video>
+      <button id="capture">Capture</button>
+    </div>
+    <img id="photo" />
+    <script>
+      async function init() {
+  const video = document.getElementById("preview");
+  video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+  video.onloadedmetadata = () => {
+    video.play();
+  };
+  document.getElementById("capture").onclick = () => {
+    const canvas = document.createElement("canvas");
+    // the canvas defaults are 300x180
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    document.getElementById("photo").setAttribute("src", canvas.toDataURL());
+  };
+}
+      init();
+    </script>
+  </body>
+</html>
