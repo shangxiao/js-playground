@@ -9,7 +9,7 @@
   <body>
     <h1>Camera</h1>
     <div>
-      <video id="preview"></video>
+      <video id="preview" autoplay></video>
       <button id="capture">Capture</button>
     </div>
     <img id="photo" />
@@ -17,9 +17,6 @@
       async function init() {
   const video = document.getElementById("preview");
   video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-  video.onloadedmetadata = () => {
-    video.play();
-  };
   document.getElementById("capture").onclick = () => {
     const canvas = document.createElement("canvas");
     // the canvas defaults are 300x180
