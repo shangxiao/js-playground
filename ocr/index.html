@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OCR</title>
+    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+  </head>
+
+  <body>
+    <h1>OCR</h1>
+    <img id="image" src="https://tesseract.projectnaptha.com/img/eng_bw.png" />
+    <label id="status"></label>
+    <progress id="progress"></progress>
+    <p id="text"></p>
+    <script>
+      const image = document.getElementById("image");
+      Tesseract.recognize(image, "eng", {
+        logger: ({ status, progress }) => {
+          document.getElementById("status").innerText = status;
+          if (status == "recognizing text") {
+            document.getElementById("progress").value = progress;
+          }
+        },
+      }).then(({ data: { text } }) => {
+        document.getElementById("text").innerText = text;
+      });
+    </script>
+  </body>
+</html>
