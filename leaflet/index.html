@@ -36,6 +36,9 @@
   <body>
     <h1>Leaflet example with resizeable panel on side</h1>
     <p>Drag the small resize handle in the bottom-right corner of the chart panel</p>
+    <p>
+      <label><input type="checkbox" id="pan" checked /> Pan the map (keeps it in the centre of the container)</label>
+    </p>
     <div id="container">
       <div id="chart"><h2>Chart</h2></div>
       <div id="map"></div>
@@ -55,7 +58,7 @@
         }
       ).addTo(mymap);
       const ro = new ResizeObserver((entries) => {
-        mymap.invalidateSize();
+        mymap.invalidateSize({ pan: document.getElementById("pan").checked });
       });
       ro.observe(document.getElementById("chart"));
     </script>
