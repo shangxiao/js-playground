@@ -18,17 +18,17 @@
       document.getElementById("user-agent").innerText = `User agent: ${navigator.userAgent}`;
 
       async function init() {
-  const video = document.getElementById("preview");
-  video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-  document.getElementById("capture").onclick = () => {
-    const canvas = document.createElement("canvas");
-    // the canvas defaults are 300x180
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext("2d").drawImage(video, 0, 0);
-    document.getElementById("photo").setAttribute("src", canvas.toDataURL());
-  };
-}
+        const video = document.getElementById("preview");
+        video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        document.getElementById("capture").onclick = () => {
+          const canvas = document.createElement("canvas");
+          // the canvas defaults are 300x180
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0);
+          document.getElementById("photo").setAttribute("src", canvas.toDataURL());
+        };
+      }
       init();
     </script>
   </body>
