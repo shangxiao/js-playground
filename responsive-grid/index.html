@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Responsive Grid without Media Queries</title>
+    <style>
+      :root {
+        --min-col-width: 250px;
+        --max-cols: 3;
+      }
+      label {
+        display: block;
+        margin: 1em;
+      }
+      input {
+        width: 3rem;
+        text-align: right;
+      }
+      #grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(max(var(--min-col-width), 100% / var(--max-cols) - 0.5em), 1fr));
+        grid-gap: 0.5em;
+      }
+      .cell {
+        background-color: lightblue;
+        aspect-ratio: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Responsive Grid without Media Queries</h1>
+    <form>
+      <label>Minimum column width <input type="number" value="250" min="1" id="minColWidth" />px</label>
+      <label>Maximum columns <input type="number" value="3" min="1" id="maxCols" /></label>
+      <label>Number of cells <input type="number" value="5" min="1" id="numCells" /></label>
+    </form>
+    <div id="grid"></div>
+    <script>
+      const setCellText = (cell, cellNo) => {
+        cell.innerText = `Cell ${cellNo} ${cell.clientWidth}x${cell.clientHeight}`;
+      };
+
+      const ro = new ResizeObserver((entries) => {
+        for (let i in entries) {
+          setCellText(entries[i].target, parseInt(i) + 1);
+        }
+      });
+
+      const drawCells = (num) => {
+        ro.disconnect();
+        document.getElementById("grid").innerHTML = "";
+        for (let i = 0; i < num; i++) {
+          let cell = document.createElement("div");
+          cell.classList = ["cell"];
+          ro.observe(cell);
+          document.getElementById("grid").appendChild(cell);
+        }
+      };
+      drawCells(parseInt(document.getElementById("numCells").value));
+
+      document.getElementById("minColWidth").onchange = (e) => {
+        document.documentElement.style.setProperty("--min-col-width", `${e.target.value}px`);
+      };
+
+      document.getElementById("maxCols").onchange = (e) => {
+        document.documentElement.style.setProperty("--max-cols", e.target.value);
+      };
+
+      document.getElementById("numCells").onchange = (e) => {
+        drawCells(parseInt(e.target.value));
+      };
+    </script>
+  </body>
+</html>
