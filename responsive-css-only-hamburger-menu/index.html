@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Responsive CSS-Only Hamburger Menu</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      button {
+        background: none;
+        border: none;
+      }
+      button,
+      label {
+        cursor: pointer;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+        display: flex;
+      }
+      aside {
+        display: flex;
+      }
+      nav {
+        padding: 1em;
+        background-color: pink;
+        border: 1px solid palevioletred;
+      }
+      ul {
+        padding: 0;
+      }
+      li {
+        list-style-type: none;
+      }
+      a {
+        white-space: nowrap;
+      }
+      section {
+        flex: 1;
+        background-color: lightblue;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #menu-checkbox,
+      #open-menu,
+      #close-menu {
+        display: none;
+      }
+
+      @media only screen and (max-width: 600px) {
+        aside {
+          position: relative;
+        }
+        #open-menu,
+        #close-menu {
+          display: inline;
+          font-size: 18px;
+        }
+        #open-menu {
+          position: absolute;
+        }
+        #close-menu {
+          float: right;
+          margin-bottom: 0.5em;
+        }
+        #menu-checkbox ~ nav {
+          position: absolute;
+          left: -150px;
+          transition: left 0.5s;
+        }
+        #menu-checkbox:checked ~ nav {
+          position: absolute;
+          left: 0;
+          transition: left 0.5s;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Responsive CSS-Only Hamburger Menu</h1>
+    <main>
+      <aside>
+        <input type="checkbox" id="menu-checkbox" />
+          <label id="open-menu" for="menu-checkbox">&#x2630;</label>
+        <nav>
+          <button id="close-menu">
+            <label for="menu-checkbox">&#x2715;</label>
+          </button>
+          <ul>
+            <li><a href="#">Menu item 1</a></li>
+            <li><a href="#">Menu item 2</a></li>
+            <li><a href="#">Menu item 3</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <section>content</section>
+    </main>
+  </body>
+</html>
