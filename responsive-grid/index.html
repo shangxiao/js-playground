@@ -8,6 +8,7 @@
       :root {
         --min-col-width: 250px;
         --max-cols: 3;
+        --grid-gap: 0.5em;
       }
       label {
         display: block;
@@ -19,8 +20,8 @@
       }
       #grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(max(var(--min-col-width), 100% / var(--max-cols) - 0.5em), 1fr));
-        grid-gap: 0.5em;
+        grid-template-columns: repeat(auto-fit, minmax(max(var(--min-col-width), 100% / var(--max-cols) - var(--grid-gap)), 1fr));
+        grid-gap: var(--grid-gap);
       }
       .cell {
         background-color: lightblue;
