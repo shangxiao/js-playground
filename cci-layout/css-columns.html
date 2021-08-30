@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CSS Columns</title>
+    <style>
+      main {
+        columns: 3;
+        column-width: 250px;
+      }
+      header {
+        /* margin: 1em;*/
+        column-span: all;
+        display: flex;
+        gap: 1em;
+      }
+      .speedometer,
+      .chart {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .speedometer {
+        flex: 1;
+        background-color: lightblue;
+      }
+      .chart {
+        /*margin: 1em;*/
+        background-color: plum;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>CSS Columns</h1>
+    <main>
+      <header>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+      </header>
+      <div class="chart">chart</div>
+      <div class="chart">chart</div>
+      <div class="chart">chart</div>
+      <div class="chart">chart</div>
+      <div class="chart">chart</div>
+      <div class="chart">chart</div>
+    </main>
+  </body>
+</html>
