@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CSS-Only (Almost) Keyboard Accessible Popup Menu</title>
+    <style>
+      .explainer {
+        width: 50em;
+        margin-bottom: 2em;
+      }
+      .explainer li {
+        margin: 0.5em;
+      }
+      .menu a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+      .menu button {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+      .menu {
+        display: flex;
+        padding: 0;
+      }
+      .menu li {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        background-color: lightblue;
+        list-style-type: none;
+      }
+      .menu li ul {
+        display: none;
+        padding: 0;
+      }
+      .menu li:hover ul,
+      .menu li:focus-within ul {
+        display: block;
+      }
+      .menu li li {
+        background-color: lightpink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>CSS-Only (Almost) Keyboard Accessible Popup Menu</h1>
+    <p>
+      This demo shows how you can support keyboard users and improve
+      accessibility with (almost) no JavaScript:
+    </p>
+    <ul class="explainer">
+      <li>
+        The menu below has popups that are accessible from mouse from hover
+        states as well as with the keyboard with focus states.
+      </li>
+      <li>
+        Use the
+        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within"
+          >:focus-within</a
+        >
+        pseudo-class with a nested focusable element to open the menu. Use this
+        instead of :focus as it won't let the user tab
+        <em>into</em> the menu itself. If you only use :focus on the main menu
+        item as soon as the user hits tab to go into the submenu this will have
+        the effect of closing it.
+      </li>
+      <li>
+        Add either an anchor with tabindex="0" or a button to each top-level
+        menu item allows you to capture a focus event.
+      </li>
+      <li>
+        The small onclick handler is used to force a focus for UI tools such as
+        Vimium that simulate clicks.
+      </li>
+    </ul>
+
+    <ul class="menu">
+      <li>
+        <a tabindex="0" onclick="event.target.focus()"
+          >Menu Item 1 with an anchor</a
+        >
+        <ul>
+          <li><a href="#">Submenu Item 1</a></li>
+          <li><a href="#">Submenu Item 2</a></li>
+          <li><a href="#">Submenu Item 3</a></li>
+        </ul>
+      </li>
+      <li>
+        <button onclick="event.target.focus()">
+          Menu Item 2 with a button
+        </button>
+        <ul>
+          <li><a href="#">Submenu Item 1</a></li>
+          <li><a href="#">Submenu Item 2</a></li>
+          <li><a href="#">Submenu Item 3</a></li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
