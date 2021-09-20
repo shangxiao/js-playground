@@ -27,15 +27,18 @@
         display: flex;
       }
       .submenu {
-        display: flex;
+        display: none;
         flex-direction: column;
-        opacity: 0;
-        pointer-events: none;
       }
       .menu:hover .submenu,
       .menu:focus-within .submenu {
-        opacity: 1;
         pointer-events: auto;
+        display: flex;
+      }
+      .menu:hover .capture,
+      .menu:focus-within .capture,
+      :checked + .capture {
+        display: none;
       }
       .menu-item,
       .submenu-item {
@@ -60,19 +63,27 @@
     <p class="explainer">
       A colleague, <a href="https://github.com/bigskinnyboy">@bigskinnyboy</a>, pointed out that an ideal accessible menu should make use of
       arrow keys to navigate the submenus instead of the tab key. Here is an attempt to achieve this using <em>radio buttons</em> to control
-      the submenu state. JavaScript is used to capture the menu selection.
+      the submenu state. JavaScript is used to capture the menu selection and capture focus for submenus that have already been traversed.
     </p>
     <p>A couple of things to note:</p>
     <ul class="explainer">
       <li>
-        Submenu state is preserved between tabbing, meaning that navigating back to a previously traversed submenu will show the last
-        navigated item.
+        Since submenu state is preserved when tabbing to the next submenu, it's not possible to re-open a submenu via tabbing that was
+        traversed into and an item left selected. This happens because the checked radio button is the focus target – since the radio is
+        display none then it won't receive focus. To get around this a "capture" checkbox is used to receive the focus temporarily.
       </li>
-      <li>There doesn't appear to be a way to capture the selected menu item without using JavaScript.</li>
+      <li>
+        Radio button selection via the use of arrow keys triggers click events. Due to this there's no way to distinguish from a mouse
+        selection or a user simply navigating the submenu.
+      </li>
     </ul>
     <nav>
       <div class="menu">
-        <label class="menu-item">Menu Item 1<input type="radio" value="Menu Item 1" name="Menu Item 1" checked /></label>
+        <label class="menu-item">
+          Menu Item 1
+          <input type="radio" value="Menu Item 1" name="Menu Item 1" checked />
+          <input type="checkbox" class="capture" />
+        </label>
         <div class="submenu">
           <label class="submenu-item">Submenu Item 1<input type="radio" value="Submenu Item 1" name="Menu Item 1" /></label>
           <label class="submenu-item">Submenu Item 2<input type="radio" value="Submenu Item 2" name="Menu Item 1" /></label>
@@ -80,7 +91,11 @@
         </div>
       </div>
       <div class="menu">
-        <label class="menu-item">Menu Item 2<input type="radio" value="Menu Item 2" name="Menu Item 2" checked /></label>
+        <label class="menu-item">
+          Menu Item 2
+          <input type="radio" value="Menu Item 2" name="Menu Item 2" checked />
+          <input type="checkbox" class="capture" />
+        </label>
         <div class="submenu">
           <label class="submenu-item">Submenu Item 1<input type="radio" value="Submenu Item 1" name="Menu Item 2" /></label>
           <label class="submenu-item">Submenu Item 2<input type="radio" value="Submenu Item 2" name="Menu Item 2" /></label>
@@ -98,6 +113,11 @@
           if (e.key == "Enter") {
             alert(`Navigating to ${e.target.value}`);
           }
+        };
+      }
+      for (el of document.querySelectorAll(".capture")) {
+        el.onfocus = (e) => {
+          e.target.parentNode.click();
         };
       }
     </script>
