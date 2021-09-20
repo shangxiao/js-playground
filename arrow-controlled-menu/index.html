@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>Arrow-controlled menu</title>
     <style>
+      :root {
+        --input-opacity: 0;
+      }
       .explainer {
         width: 50em;
       }
-      ul.explainer {
+      form.explainer {
         margin-bottom: 2em;
       }
-      input {
-        opacity: 0;
+      nav input {
+        opacity: var(--input-opacity);
       }
       label {
         box-sizing: border-box;
@@ -77,6 +80,11 @@
         selection or a user simply navigating the submenu.
       </li>
     </ul>
+    <form class="explainer">
+      <p>
+        <label>Show inputs controlling state <input type="checkbox" id="show-inputs" /></label>
+      </p>
+    </form>
     <nav>
       <div class="menu">
         <label class="menu-item">
@@ -120,6 +128,10 @@
           e.target.parentNode.click();
         };
       }
+      document.getElementById("show-inputs").onchange = (e) => {
+        const opacity = e.target.checked ? 1 : 0;
+        document.documentElement.style.setProperty("--input-opacity", opacity);
+      };
     </script>
   </body>
 </html>
