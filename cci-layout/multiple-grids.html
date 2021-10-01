@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Multiple Grids</title>
+    <style>
+      :root {
+        --max-speedo-cols: 6;
+        --max-chart-cols: 4;
+        --min-col-width: 150px;
+        --grid-gap: 0.5em;
+      }
+      .speedos,
+      .charts {
+        display: grid;
+        grid-gap: var(--grid-gap);
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(
+            max(
+              var(--min-col-width),
+              100% / var(--max-chart-cols) - var(--grid-gap)
+            ),
+            1fr
+          )
+        );
+      }
+      .speedos {
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(
+            max(
+              var(--min-col-width),
+              100% / var(--max-speedo-cols) - var(--grid-gap)
+            ),
+            1fr
+          )
+        );
+        margin-bottom: 0.5em;
+      }
+      .speedometer,
+      .chart {
+        min-width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .speedometer {
+        aspect-ratio: 1;
+        background-color: lightblue;
+      }
+      .chart {
+        background-color: plum;
+      }
+      .first {
+        aspect-ratio: 2;
+      }
+      .second {
+        aspect-ratio: 3;
+      }
+      .third {
+        aspect-ratio: 0.5;
+      }
+      .fourth {
+        aspect-ratio: 1.5;
+      }
+      .fifth {
+        aspect-ratio: 1;
+      }
+      .sixth {
+        aspect-ratio: 2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div class="speedos">
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+        <div class="speedometer">speedometer</div>
+      </div>
+      <div class="charts">
+        <div class="chart first">chart</div>
+        <div class="chart second">chart</div>
+        <div class="chart third">chart</div>
+        <div class="chart fourth">chart</div>
+        <div class="chart fifth">chart</div>
+        <div class="chart sixth">chart</div>
+        <div class="chart first">chart</div>
+        <div class="chart second">chart</div>
+        <div class="chart third">chart</div>
+        <div class="chart fourth">chart</div>
+        <div class="chart fifth">chart</div>
+        <div class="chart sixth">chart</div>
+      </div>
+    </div>
+  </body>
+</html>
