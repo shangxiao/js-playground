@@ -6,98 +6,114 @@
     <title>Multiple Grids</title>
     <style>
       :root {
-        --max-speedo-cols: 6;
-        --max-chart-cols: 4;
-        --min-col-width: 150px;
+        --min-col-width: 200px;
         --grid-gap: 0.5em;
       }
-      .speedos,
-      .charts {
+      .section {
         display: grid;
         grid-gap: var(--grid-gap);
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(
-            max(
-              var(--min-col-width),
-              100% / var(--max-chart-cols) - var(--grid-gap)
-            ),
-            1fr
-          )
-        );
+        margin-bottom: var(--grid-gap);
       }
-      .speedos {
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(
-            max(
-              var(--min-col-width),
-              100% / var(--max-speedo-cols) - var(--grid-gap)
-            ),
-            1fr
-          )
-        );
-        margin-bottom: 0.5em;
+      .subsection {
+        display: flex;
+        flex-direction: column;
+        gap: var(--grid-gap);
       }
-      .speedometer,
       .chart {
-        min-width: 150px;
         display: flex;
         align-items: center;
         justify-content: center;
+        aspect-ratio: 1;
       }
       .speedometer {
-        aspect-ratio: 1;
         background-color: lightblue;
       }
-      .chart {
+      .consensus {
+        background-color: palevioletred;
+      }
+      .trend {
         background-color: plum;
       }
-      .first {
-        aspect-ratio: 2;
-      }
-      .second {
-        aspect-ratio: 3;
-      }
-      .third {
-        aspect-ratio: 0.5;
-      }
-      .fourth {
-        aspect-ratio: 1.5;
-      }
-      .fifth {
-        aspect-ratio: 1;
-      }
-      .sixth {
-        aspect-ratio: 2;
+      .consensus {
+        aspect-ratio: 1/3;
       }
     </style>
   </head>
 
   <body>
-    <div>
-      <div class="speedos">
-        <div class="speedometer">speedometer</div>
-        <div class="speedometer">speedometer</div>
-        <div class="speedometer">speedometer</div>
-        <div class="speedometer">speedometer</div>
-        <div class="speedometer">speedometer</div>
-        <div class="speedometer">speedometer</div>
-      </div>
-      <div class="charts">
-        <div class="chart first">chart</div>
-        <div class="chart second">chart</div>
-        <div class="chart third">chart</div>
-        <div class="chart fourth">chart</div>
-        <div class="chart fifth">chart</div>
-        <div class="chart sixth">chart</div>
-        <div class="chart first">chart</div>
-        <div class="chart second">chart</div>
-        <div class="chart third">chart</div>
-        <div class="chart fourth">chart</div>
-        <div class="chart fifth">chart</div>
-        <div class="chart sixth">chart</div>
-      </div>
-    </div>
+    <p>Choose from: speedometer, trend or consensus. Min chart width for all is set to 200px.</p>
+    <form>
+      <textarea rows="10" cols="80"></textarea><br />
+      <button>Update</button>
+    </form>
+    <div id="charts"></div>
+    <script>
+      const initialCharts = [
+        {
+          columns: 6,
+          charts: [
+            "speedometer",
+            "speedometer",
+            "speedometer",
+            "speedometer",
+            "speedometer",
+            "speedometer",
+          ],
+        },
+        {
+          columns: 4,
+          charts: [
+            ["trend", "trend"],
+            "consensus",
+            "trend",
+            "trend",
+            "trend",
+            "consensus",
+            "trend",
+            "trend",
+          ],
+        },
+      ];
+      document.querySelector("textarea").value = JSON.stringify(
+        initialCharts,
+        null,
+        2
+      );
+      function makeChart(chartName) {
+        const chartDiv = document.createElement("div");
+        chartDiv.classList.add("chart", chartName);
+        chartDiv.innerText = chartName;
+        return chartDiv;
+      }
+      function drawCharts(charts) {
+        document.getElementById("charts").innerHTML = "";
+        for (const section of charts) {
+          const columns = section.columns;
+          const sectionDiv = document.createElement("div");
+          sectionDiv.classList.add("section");
+          sectionDiv.style.gridTemplateColumns = `repeat(auto-fit, minmax(max(var(--min-col-width), 100% / ${columns} - var(--grid-gap)), 1fr))`;
+          document.getElementById("charts").appendChild(sectionDiv);
+          for (chart of section.charts) {
+            if (Array.isArray(chart)) {
+              const subsectionDiv = document.createElement("div");
+              subsectionDiv.classList.add("subsection");
+              for (subchart of chart) {
+                subsectionDiv.appendChild(makeChart(subchart));
+              }
+              sectionDiv.appendChild(subsectionDiv);
+            } else {
+              sectionDiv.appendChild(makeChart(chart));
+            }
+          }
+        }
+      }
+      drawCharts(initialCharts);
+      document.querySelector("form").onsubmit = (e) => {
+        e.preventDefault();
+        const charts = JSON.parse(document.querySelector("textarea").value);
+        drawCharts(charts);
+        return false;
+      };
+    </script>
   </body>
 </html>
