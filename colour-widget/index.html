@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Colour Widget</title>
+  </head>
+
+  <body>
+    <h1>Colour Widget</h1>
+    <form onsubmit="alert('Selected colour: [' + this.colour.value + ']')">
+      <label>
+        <input value="" name="colour" id="set-colour" readonly />
+        <button type="button" onclick="this.form.colour.value = ''; this.form.colour.style.backgroundColor = '';">Clear colour</button>
+        <button type="button" onclick="document.getElementById('dialog').showModal()">Set colour</button>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+  <script>
+    function onClose(e) {
+      if (e.target.returnValue == "ok") {
+        const colour = document.getElementById("new-colour").value;
+        document.getElementById("set-colour").value = colour;
+        document.getElementById("set-colour").style.backgroundColor = colour;
+      }
+    }
+  </script>
+  <dialog id="dialog" onclose="onClose(event)">
+    <form method="dialog">
+      <input type="color" id="new-colour" />
+      <button value="cancel">Cancel</button>
+      <button value="ok">OK</button>
+    </form>
+  </dialog>
+</html>
