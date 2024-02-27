@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>test</title>
+    <style>
+      section {
+        width: 750px;
+        margin: 2em auto;
+      }
+      table {
+        width: 100%;
+      }
+      td {
+        border: 1px solid lightblue;
+      }
+      input {
+        visibility: hidden;
+        display: none;
+      }
+      tr:has(input:checked) {
+        background-color: lightblue;
+      }
+      label {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <h1>Select multiple rows</h1>
+      <form>
+        <table cellspacing="1">
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 1 Column 1
+                <input type="checkbox" id="row1" />
+              </label>
+            </td>
+            <td>
+              <label for="row1">Clickable row Row 1 Column 2 </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 2 Column 1
+                <input type="checkbox" id="row2" />
+              </label>
+            </td>
+            <td>
+              <label for="row2">Clickable row Row 2 Column 2 </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 3 Column 1
+                <input type="checkbox" id="row3" />
+              </label>
+            </td>
+            <td>
+              <label for="row3">Clickable row Row 3 Column 2 </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <h1>Select single row</h1>
+      <form>
+        <table cellspacing="1">
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 1 Column 1
+                <input type="radio" id="radio-row1" name="selection" />
+              </label>
+            </td>
+            <td>
+              <label for="radio-row1">Clickable row Row 1 Column 2 </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 2 Column 1
+                <input type="radio" id="radio-row2" name="selection" />
+              </label>
+            </td>
+            <td>
+              <label for="radio-row2">Clickable row Row 2 Column 2 </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Clickable row Row 3 Column 1
+                <input type="radio" id="radio-row3" name="selection" />
+              </label>
+            </td>
+            <td>
+              <label for="radio-row3">Clickable row Row 3 Column 2 </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </section>
+  </body>
+</html>
